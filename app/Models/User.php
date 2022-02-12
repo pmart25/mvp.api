@@ -18,9 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'role',
+        'deposit',
     ];
 
     /**
@@ -56,5 +58,14 @@ class User extends Authenticatable
                'updated_at'=> now(),
            ]);
 
+    }
+
+
+    public function generateToken()
+    {
+        $this->api_token = str_random(60);
+        $this->save();
+
+        return $this->api_token;
     }
 }

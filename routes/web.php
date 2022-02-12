@@ -24,3 +24,4 @@ Route::get('/', function () {
 
 //https://www.laravelcode.com/post/laravel-8-multiple-authentication-tutorial-example
 
+//Route::post('register', [Auth\RegisterController::class,'register']);

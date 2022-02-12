@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use App\Models\User;
@@ -63,3 +64,16 @@ Route::get('createuser/{userName},{email},{password},{deposit},{role}', [UserCon
 
 
 //login with user buyer
+
+//Route::post('register', 'App\Http\Controllers\Auth\RegisterController@register');
+Route::post('register', [RegisterController::class,'register']);
+
+
+//https://www.twilio.com/blog/build-restful-api-php-laravel-sanctum
+
+use App\Http\Controllers\AuthController;
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+
+Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
