@@ -166,33 +166,38 @@ class UserController extends Controller
 
        while ($restDeposit != 0) {
                 if ($restDeposit >= 100 ) {                                                    //restDeposit greater than 100
-                    echo "change is grater than 100: ".$restDeposit."\n";
+                    //echo "change is grater than 100: ".$restDeposit."\n";
                     $restDeposit = $restDeposit-100;
                     $change["coin_100"] = $change["coin_100"]+1;
-                    if ($restDeposit >= 50 && $restDeposit < 100 ) {                           //restDeposit greater than 50 and less than 100
-                        echo "change is grater than 50: ".$restDeposit."\n";
-                        $restDeposit = $restDeposit-50;
-                        $change["coin_50"] = $change["coin_50"]+1;
-                        if ($restDeposit >= 20 && $restDeposit < 50 ) {                      //restDeposit greater than 20 and less than 50
-                            echo "change is grater than 20: ".$restDeposit."\n";
-                            $restDeposit = $restDeposit-20;
-                            $change["coin_20"] = $change["coin_20"]+1;
-                            if ($restDeposit >= 10 && $restDeposit < 20 ) {                      //restDeposit greater than 10 and less than 20
-                                echo "change is grater than 20: ".$restDeposit."\n";
-                                $restDeposit = $restDeposit-10;
-                                $change["coin_10"] = $change["coin_10"]+1;
-                                if ($restDeposit >= 5 && $restDeposit < 10 ) {                      //restDeposit greater than 5 and less than 10
-                                    echo "change is grater than 20: ".$restDeposit."\n";
-                                    $restDeposit = $restDeposit-5;
-                                    $change["coin_5"] = $change["coin_5"]+1;
-                                    if ($restDeposit <= 5) {                                       //for avoiding missmatches...
-                                        $restDeposit = 0;
-                                    }//end if less than 5 
-                                }//end if coin_5  
-                            }//end if coin_10  
-                        }//end if coin_20      
-                }//end if coin_50
-        }//end if coin_100
+                }//end if coin_100
+                if ($restDeposit >= 50 && $restDeposit < 100 ) {                           //restDeposit greater than 50 and less than 100
+                    //echo "change is grater than 50: ".$restDeposit."\n";
+                    $restDeposit = $restDeposit-50;
+                    $change["coin_50"] = $change["coin_50"]+1;
+                }//end if coin_50     
+                if ($restDeposit >= 20 && $restDeposit < 50 ) {                      //restDeposit greater than 20 and less than 50
+                    //echo "change is grater than 20: ".$restDeposit."\n";
+                    $restDeposit = $restDeposit-20;
+                    $change["coin_20"] = $change["coin_20"]+1;
+                }//end if coin_20  
+                if ($restDeposit >= 10 && $restDeposit < 20 ) {                      //restDeposit greater than 10 and less than 20
+                    //echo "change is grater than 20: ".$restDeposit."\n";
+                    $restDeposit = $restDeposit-10;
+                    $change["coin_10"] = $change["coin_10"]+1;
+                }//end if coin_10  
+                if ($restDeposit >= 5 && $restDeposit < 10 ) {                      //restDeposit greater than 5 and less than 10
+                    //echo "change is grater than 20: ".$restDeposit."\n";
+                    $restDeposit = $restDeposit-5;
+                    $change["coin_5"] = $change["coin_5"]+1;
+                }//end if coin_5  
+                if ($restDeposit <= 5) {                                       //for avoiding missmatches...
+                $restDeposit = 0;
+                }//end if less than 5 
+                            
+                           
+                            
+                
+      
 
 
        } //end while
