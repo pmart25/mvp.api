@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminController;
 
 /*
@@ -20,8 +20,7 @@ Route::get('/', function () {
 });
 
 
-
-
-//https://www.laravelcode.com/post/laravel-8-multiple-authentication-tutorial-example
-
-//Route::post('register', [Auth\RegisterController::class,'register']);
+ 
+Route::get('{any}', function () {
+    return view('app');
+})->where('any', '.*');
