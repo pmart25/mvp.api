@@ -19,8 +19,8 @@ class Product extends Model
 
     public static function amountAvailable($productId) {
 
-        return Product::where('id',  $productId)->pluck('amountAvailable');
-
+        return Product::where('id',  $productId)->select('amountAvailable')->first()->amountAvailable;
+   
 
     }
 
@@ -38,6 +38,14 @@ class Product extends Model
 
     }
 
+
+    public static function buyProduct($productId) {
+
+
+        $productAmount = self::amountAvailable($productId);
+        $newProductAmount = $productAmount-1;
+        return Product::where('id',  $productId)->update(['amountAvailable' => $newProductAmount]);
+    }
 
     public static function deleteProduct($productId) {
 

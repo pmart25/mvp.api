@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Http\Controllers\AuthController;
+
 
 class User extends Authenticatable
 {
@@ -68,4 +70,57 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    public static function getDeposit($userId){
+      
+       
+       return User::where('id',  $userId)->select('deposit')->first()->deposit;
+
+
+
+    }
+
+    public static function resetDeposit($userId){
+      
+       
+        return User::where('id',  $userId)->update(['deposit' => 0]);
+ 
+ 
+ 
+     }
+
+
+     public static function addDeposit( $amountMoney){
+        $userId = auth()->user()->id;
+       $userDeposit = self::getDeposit($userId);
+       if ($userDeposit == 500) {
+          echo "Not possible deposit more than 500 cents.";
+          return 0;
+
+       }
+
+       $newDeposit = $userDeposit + $amountMoney;
+        return User::where('id',  $userId)->update(['deposit' => $newDeposit]);
+ 
+ 
+ 
+     }
+
+     public static function spendDeposit( $amountMoney){
+        $userId = auth()->user()->id;
+       $userDeposit = self::getDeposit($userId);
+       $newDeposit = $userDeposit - $amountMoney;
+        return User::where('id',  $userId)->update(['deposit' => $newDeposit]);
+  
+     }
+
+     public function deposit( $amountMoney){
+        $userId = auth()->user()->id;
+       $userDeposit = self::getDeposit($userId);
+       $newDeposit = $userDeposit+$amountMoney;
+        return User::where('id',  $userId)->update(['deposit' => $newDeposit]);
+ 
+ 
+ 
+     }
 }

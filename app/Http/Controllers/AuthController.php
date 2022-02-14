@@ -60,4 +60,9 @@ class AuthController extends Controller
     {
     return $request->user();
     }
+
+    public function getUserId(Request $request)
+    {
+    return $request->user()->id;
+    }
 }

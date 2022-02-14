@@ -4,8 +4,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Models\Product;
 use App\Models\User;
 /*
@@ -71,9 +71,48 @@ Route::post('register', [RegisterController::class,'register']);
 
 //https://www.twilio.com/blog/build-restful-api-php-laravel-sanctum
 
-use App\Http\Controllers\AuthController;
+
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
+Route::get('/test', function() {
+    if ( auth()->user() ) {
+        $answer = "user is logged in";
+    } else {
+        $answer = "user not logged ";
+    }
+    return $answer." with Id: ".auth()->user()->id;
+})->middleware('auth:sanctum');
 
 
-Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
+Route::get ('getdeposit/{userId}', [User::class, 'getDeposit']);
+Route::get ('reset/{userId}', [User::class, 'resetDeposit']);
+
+
+
+//https://www.amezmo.com/laravel-hosting-guides/role-based-api-authentication-with-laravel-sanctum
+Route::group(['middleware' => 'auth:sanctum'], function() {
+    // list all post
+    Route::post('deposit/{amountMoney}', [UserController::class, 'deposit']);
+    Route::post('buy/{productId}', [UserController::class, 'buy']);
+
+
+});
+
+
+//Implement /deposit endpoint so users with a “buyer” role can deposit only 5, 10, 20, 
+//50 and 100 cent coins into their vending machine account (one coin at the time).  --> done 
+
+//Implement /buy endpoint (accepts productId, amount of products) so users with a
+//“buyer” role can buy a product (shouldn't be able to buy multiple different products
+//at the same time) with the money they’ve deposited. API should return total they’ve
+//spent, the product they’ve purchased and their change if there’s any (in an array of
+//5, 10, 20, 50 and 100 cent coins)
+
+//Implement /reset endpoint so users with a “buyer” role can reset their deposit back
+//to 0 --> done
+
+//Take time to think about possible edge cases and access issues that should be
+//solved
