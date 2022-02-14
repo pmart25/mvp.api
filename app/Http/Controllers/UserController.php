@@ -177,7 +177,7 @@ class UserController extends Controller
                             echo "change is grater than 20: ".$restDeposit."\n";
                             $restDeposit = $restDeposit-20;
                             $change["coin_20"] = $change["coin_20"]+1;
-                            if ($restDeposit >= 10 && $restDeposit < 20 )) {                      //restDeposit greater than 10 and less than 20
+                            if ($restDeposit >= 10 && $restDeposit < 20 ) {                      //restDeposit greater than 10 and less than 20
                                 echo "change is grater than 20: ".$restDeposit."\n";
                                 $restDeposit = $restDeposit-10;
                                 $change["coin_10"] = $change["coin_10"]+1;
