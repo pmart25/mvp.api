@@ -129,7 +129,11 @@ class UserController extends Controller
 
 
         //everything is ok then
+
+        echo "deposit of user before buy  a  product: ". User::getDeposit($user->id)."\n";
+        echo "making transaction\n";
         Product::buyProduct($productId);  //update the Product DB.
+        echo "update deposit\n";
         User::spendDeposit($product->cost); //update the User Deposit DB.
 
         $change = array( 
@@ -140,13 +144,11 @@ class UserController extends Controller
             "coin_100" => 0,   
         );
 
-        $restDeposit =  intval(User::getDeposit($user->id)-$product->cost);
-        if ($restDeposit >= 100) {
-            echo "change is: ".$restDeposit."\n";
-        }
+        $restDeposit =  intval(User::getDeposit($user->id));
+       
         
                     
-        $buyTransaction = "User ". $user->username. "  bought the product " .$product->productName  . ". The product cost is  ". $product->cost. ". Actual User deposit after buy a product is ". User::getDeposit($user->id)-$product->cost . ". And the change is: ";
+        $buyTransaction = "User ". $user->username. "  bought the product " .$product->productName  . ". The product cost is  ". $product->cost. ". Actual User deposit after buy a product is ". $restDeposit . ". And the change is: ";
         echo $buyTransaction;
        
 
@@ -158,26 +160,38 @@ class UserController extends Controller
             "coin_100" => 0,   
         );
 
-        $restDeposit =  intval(User::getDeposit($user->id)-$product->cost);
-        if ($restDeposit >= 100) {
-            echo "change is: ".$restDeposit."\n";
-        }
+        
+   
         
 
        while ($restDeposit != 0) {
-        if ($restDeposit >= 100 ) {
-            echo "change is grater than 100: ".$restDeposit."\n";
-            $restDeposit = $restDeposit-100;
-            $change["coin_100"] = $change["coin_100"]+1;
-            if ($restDeposit >= 50 ) {
-                echo "change is grater than 50: ".$restDeposit."\n";
-                $restDeposit = $restDeposit-50;
-                $change["coin_100"] = $change["coin_50"]+1;
-                if ($restDeposit <= 49) {
-                       $restDeposit = 0;
-
-               }//end if coin_20      
-           }//end if coin_50
+                if ($restDeposit >= 100 ) {                                                    //restDeposit greater than 100
+                    echo "change is grater than 100: ".$restDeposit."\n";
+                    $restDeposit = $restDeposit-100;
+                    $change["coin_100"] = $change["coin_100"]+1;
+                    if ($restDeposit >= 50 && $restDeposit < 100 ) {                           //restDeposit greater than 50 and less than 100
+                        echo "change is grater than 50: ".$restDeposit."\n";
+                        $restDeposit = $restDeposit-50;
+                        $change["coin_50"] = $change["coin_50"]+1;
+                        if ($restDeposit >= 20 && $restDeposit < 50 ) {                      //restDeposit greater than 20 and less than 50
+                            echo "change is grater than 20: ".$restDeposit."\n";
+                            $restDeposit = $restDeposit-20;
+                            $change["coin_20"] = $change["coin_20"]+1;
+                            if ($restDeposit >= 10 && $restDeposit < 20 )) {                      //restDeposit greater than 10 and less than 20
+                                echo "change is grater than 20: ".$restDeposit."\n";
+                                $restDeposit = $restDeposit-10;
+                                $change["coin_10"] = $change["coin_10"]+1;
+                                if ($restDeposit >= 5 && $restDeposit < 10 ) {                      //restDeposit greater than 5 and less than 10
+                                    echo "change is grater than 20: ".$restDeposit."\n";
+                                    $restDeposit = $restDeposit-5;
+                                    $change["coin_5"] = $change["coin_5"]+1;
+                                    if ($restDeposit <= 5) {                                       //for avoiding missmatches...
+                                        $restDeposit = 0;
+                                    }//end if less than 5 
+                                }//end if coin_5  
+                            }//end if coin_10  
+                        }//end if coin_20      
+                }//end if coin_50
         }//end if coin_100
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Auth;
 
 class ProductController extends Controller
 {
@@ -19,9 +20,7 @@ class ProductController extends Controller
         return Product::find($id);
     }
 
-    public function getData() {
-        return 'hello';
-    }
+   
 
     public function getAmount($productId)
     {
@@ -37,5 +36,18 @@ class ProductController extends Controller
     public function deleteProduct($productId)
     {
         return Product::deleteProduct($productId);
+    }
+
+
+    public function updateAmountProduct($productId, $amountAvailable)
+    {
+
+        $user = auth()->user();
+        if (strcmp($user->role, "seller") != 0) {  //if user role is not a buyer
+            echo "User is not a seller. Only buyer sellers can update a stock number of Products.";
+            return 0;
+
+        }
+        return Product::where( 'id' , $productId)->update(['amountAvailable' => $amountAvailable]);
     }
 }

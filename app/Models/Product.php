@@ -12,7 +12,7 @@ class Product extends Model
 
     use HasFactory;
 
-    // https://www.toptal.com/laravel/restful-laravel-api-tutorial
+    
     
     protected $fillable = ['productName', 'amountAvailable', 'sellerId'];
 
@@ -51,6 +51,15 @@ class Product extends Model
 
         
         Product::where( 'id' , $productId)->delete();
+
+    }
+
+
+    public static function updateAmountProduct($productId, $amountAvailable ) {
+
+        
+        Product::where( 'id' , $productId)->update(['amountAvailable' => $amountAvailable]);
+       
 
     }
 }

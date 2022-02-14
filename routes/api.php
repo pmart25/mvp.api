@@ -47,7 +47,7 @@ Route::get('productamount/{id}', [ProductController::class,'getAmount']);
 Route::get('createproduct/{productName},{amountAvailable},{cost},{sellerId}', [ProductController::class,'createProduct']);  //post
 //createproduct/lillipop,15,5,45 
 Route::get('deleteproduct/{id}', [ProductController::class,'deleteProduct']);  //post
-
+Route::post('updateamountproduct/{amountProduct}', [ProductController::class,'updateAmountProduct']);  //post
 
 
 
@@ -97,6 +97,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     // list all post
     Route::post('deposit/{amountMoney}', [UserController::class, 'deposit']);
     Route::post('buy/{productId}', [UserController::class, 'buy']);
+    Route::post('updateamountproduct/{amountProduct}', [ProductController::class,'updateAmountProduct']);  //post
 
 
 });
@@ -109,7 +110,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 //“buyer” role can buy a product (shouldn't be able to buy multiple different products
 //at the same time) with the money they’ve deposited. API should return total they’ve
 //spent, the product they’ve purchased and their change if there’s any (in an array of
-//5, 10, 20, 50 and 100 cent coins)
+//5, 10, 20, 50 and 100 cent coins)  --> done
 
 //Implement /reset endpoint so users with a “buyer” role can reset their deposit back
 //to 0 --> done
